@@ -1,50 +1,113 @@
 # battleships
 the battleships riddle game
 
-Instructions to Canva: 
+Instructions from Claude
 
-simulate an app called battleships with a 13x113 grid each square can hold a single digit.
+Here's a comprehensive description of the current Battleships Riddle Game app:
 
-Five  buttons over the grid: New, Reset, Undo, Redo, Calc
+Grid Structure (13×13)
+The app displays a 13×13 grid with different functional areas:
 
-New opens three empty textboxes and a DONE button.     
-One textbox is for horizontal needed ship parts. One textbox is for vertical needed ship parts. One for hints. 
-. 
-I enter two sequences of ten digits in the  textboxes.     
-The first textbox is for the horizontal digits, which set the row 11 cells. The other textbox, with ten digits, is for the vertical digits needed for the ship parts, setting the column 11 cells.         
-These row and col 11  cells' digits are large and in bold. 
- 
-A third textbox allows the user to enter comma and space separated hints. Row.Col.Type: (eg. 4.5.M, 7.1.S) 
-- M for middle ship part (square)
-- L for ship end left 
-- R for ship end right, 
-- U for up, 
-- D for down, 
-- T for torpedo (circle)
-- S for Sea.     
-Hovering over the third textbox caption: "Hints"  shows the explanation Row.Col.Type. M - middle...  etc. 
+Main Play Area (Rows 0-9, Cols 0-9): 10×10 Grid
+Primary puzzle area where ships are placed and hints are given
+Each cell contains a single-character textbox
+Supports hints: U (up), D (down), L (left), R (right), M (middle), S/X (sea)
+Supports numbers: 1-4 for ship parts
+Needed Parts (Row 10, Col 10)
+Row 10 (cols 0-9): Shows how many ship parts are needed in each column
+Col 10 (rows 0-9): Shows how many ship parts are needed in each row
+Editable textboxes that accept numbers
+Special behavior: Entering "0" automatically fills entire row/column with "X" (sea)
+Parts Left (Row 11, Col 11)
+Row 11 (cols 0-9): Auto-calculated remaining parts needed per column
+Col 11 (rows 0-9): Auto-calculated remaining parts needed per row
+Formula: Needed Parts - Hinted Parts - Entered Parts
+Read-only display cells
+Vacant Spaces (Row 12, Col 12)
+Row 12 (cols 0-9): Shows remaining empty spaces per column
+Col 12 (rows 0-9): Shows remaining empty spaces per row
+Formula: 10 - Total Occupied Cells (hints + entries)
+Read-only display cells
+Label Cells
+Corner cells (10,10), (11,11), (12,12) display "Need", "Left", "Vacant"
+Cross-reference cells show corresponding labels
+Game Modes
+NEW Mode (Setup Phase)
+Button displays "NEW"
+All textboxes enabled in the 11×11 editable area (rows 0-10, cols 0-10)
+Players can:
+Set hints in main 10×10 grid (U/D/L/R/M/S/X/1-4)
+Define needed ship parts in row 10 and column 10
+Prepare the puzzle for solving
+DONE Mode (Play Phase)
+Button displays "DONE"
+Selective textbox disabling:
+Row 10 & Column 10 (needed parts) become disabled
+Any cell with hints (non-numeric content) becomes disabled
+Only empty cells and cells with numbers remain editable
+Players can only enter numbers 1-4 or X in available cells
+Visual Features
+Color Coding
+Blue cells: Sea markers (X or S hints)
+Green cells: Ship parts (digit 1, or correct adjacent groupings of 2-4)
+Gray cells: Calculated areas (rows/cols 11+)
+Light gray cells: Needed parts area (row 10, col 10)
+Disabled cells: Darker gray background
+Smart Highlighting
+Adjacent grouping logic:
+Single "1" = green
+Two adjacent "2"s = both green
+Three adjacent "3"s = all green
+Four adjacent "4"s = all green
+Thick borders: Appear around entire rows/columns when only 1 part remains
+Game Logic
+Automatic Calculations
+Parts Left Calculation:
+Counts hinted ship parts (green cells)
+Counts entered numbers (player input)
+Subtracts both from needed parts
+Updates in real-time
+Vacant Space Calculation:
+Counts all occupied cells (any non-empty cell)
+Subtracts from 10 to show remaining spaces
+Helps players manage space constraints
+Input Validation
+Single character limit per textbox
+Automatic uppercase conversion
+Real-time grid state updates
+Special Behaviors
+Zero handling: Entering "0" in needed parts automatically marks entire row/column as sea (X)
+Mode switching: Seamless transition between setup and play modes
+State preservation: All entries maintained when switching modes
+User Interface
+Controls
+NEW/DONE button: Toggles between setup and play modes
+Mode indicator: Shows current mode and instructions
+Direct input: Click and type in any enabled textbox
+Responsive Design
+Fixed 40×40 pixel cells for consistent grid appearance
+Centered layout with clear visual boundaries
+A comprehensive instructions panel below the grid
+This creates a sophisticated puzzle game that combines logical deduction with spatial reasoning, where players must use numerical constraints and directional hints to locate hidden ships on the grid.
 
-When the DONE is pressed The values of the hints are entered in the 10 by 10 grid, the values of the needed parts are entered in the 11th row and col, and the textboxes and DONE button are hidden and collapsed away. The next NEW press will clear the grids and textboxes.
+NEW Mode (Setup):
 
-This is a game with 1 four part aircraft carrier, 2 three part battleships, 3 two part destroyers, and 4 single part torpedo boats (depicted by a circle).  The boats are in the 10 by 10. grid. No boats can be adjacent to each other. Horizontally, vertically or diagonally. 
+All textboxes enabled in rows 0-11 and columns 0-11
+You can edit the main 10×10 grid (hints)
+You can edit row 10 and column 10 (needed parts)
+You can now also edit row 11 and column 11 (custom setup values)
 
-The game starts with a few hints (usually up to 3 hints) with an long-boat end part going in one direction, a long-=boat middle part as a square, or a single part torpedo boat, as a circle, or a "sea". space which shows waves. The hinted parts shape will be filled with Black The shape will be in the background and the user may fill it with a number.  (or an x, in the case of a Sea hint)
+DONE Mode (Play):
 
-An X entered by the user marks no boat (sea) and is painted dark blue. Any digit entered marks a boat part.
+Row 10, column 10, row 11, and column 11 all become disabled
+Row 11 and column 11 switch from showing your custom setup values to showing auto-calculated "parts left"
+Only the main 10×10 grid remains editable (and only cells without hints)
 
-On the 11th col and 11th row you have the number of parts given for this game. 
+This gives you full control in setup mode to prepare both the puzzle constraints (needed parts) and any custom values for row/column 11, then switches to calculated mode during play where those become the automatic "parts left" counters.RetryClaude can make mistakes. Please double-check responses. Sonnet 4
 
-On the 12th col and row, you have the number of parts left to achieve the goal of that row or col. (number of parts listed in row or col 11 minus the number of parts hinted, and the number of parts entered )
 
-On the 13th row and col you have the number of places not yet marked with X. 
 
-Once a boat part was put in, all squares diagonally are marked X. If the boat part is adjacent to another part  then the two open sides are marked with an x as well. 
 
-A line with Zero parts has zero parts left, and thus is all marked with X. (and dark blue)
-A boat with digits in the number of parts depicted by that digit (that is 4444, 333  22 or 1)  horizontally or vertically will be painted Green. 
 
-A row or col with a single part left will have the borders between its cells with a Thick black line as opposed to the regular grid lines. 
 
-First describe thesee requirements in detail and in better wording. 
 
-Then I will ask you to actually simulate this code. 
