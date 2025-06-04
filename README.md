@@ -1,113 +1,146 @@
-# battleships
-the battleships riddle game
+# Battleships Riddle Game
 
-Instructions from Claude
+A sophisticated 13×13 grid-based puzzle game that combines logical deduction with spatial reasoning to locate hidden ships using numerical constraints and directional hints.
 
-Here's a comprehensive description of the current Battleships Riddle Game app:
+## 🎮 Game Overview
 
-Grid Structure (13×13)
-The app displays a 13×13 grid with different functional areas:
+Players solve battleship puzzles by placing ship parts on a grid using:
+- **Numerical constraints** (how many parts needed per row/column)
+- **Directional hints** (U/D/L/R/M for hinted ship orientations, and S for hinted sea)
+- **Adjacent grouping logic** (consecutive numbered parts)
+- **Real-time calculations** (parts remaining, vacant spaces)
 
-Main Play Area (Rows 0-9, Cols 0-9): 10×10 Grid
-Primary puzzle area where ships are placed and hints are given
-Each cell contains a single-character textbox
-Supports hints: U (up), D (down), L (left), R (right), M (middle), S/X (sea)
-Supports numbers: 1-4 for ship parts
-Needed Parts (Row 10, Col 10)
-Row 10 (cols 0-9): Shows how many ship parts are needed in each column
-Col 10 (rows 0-9): Shows how many ship parts are needed in each row
-Editable textboxes that accept numbers
-Special behavior: Entering "0" automatically fills entire row/column with "X" (sea)
-Parts Left (Row 11, Col 11)
-Row 11 (cols 0-9): Auto-calculated remaining parts needed per column
-Col 11 (rows 0-9): Auto-calculated remaining parts needed per row
-Formula: Needed Parts - Hinted Parts - Entered Parts
-Read-only display cells
-Vacant Spaces (Row 12, Col 12)
-Row 12 (cols 0-9): Shows remaining empty spaces per column
-Col 12 (rows 0-9): Shows remaining empty spaces per row
-Formula: 10 - Total Occupied Cells (hints + entries)
-Read-only display cells
-Label Cells
-Corner cells (10,10), (11,11), (12,12) display "Need", "Left", "Vacant"
-Cross-reference cells show corresponding labels
-Game Modes
-NEW Mode (Setup Phase)
-Button displays "NEW"
-All textboxes enabled in the 11×11 editable area (rows 0-10, cols 0-10)
-Players can:
-Set hints in main 10×10 grid (U/D/L/R/M/S/X/1-4)
-Define needed ship parts in row 10 and column 10
-Prepare the puzzle for solving
-DONE Mode (Play Phase)
-Button displays "DONE"
-Selective textbox disabling:
-Row 10 & Column 10 (needed parts) become disabled
-Any cell with hints (non-numeric content) becomes disabled
-Only empty cells and cells with numbers remain editable
-Players can only enter numbers 1-4 or X in available cells
-Visual Features
-Color Coding
-Blue cells: Sea markers (X or S hints)
-Green cells: Ship parts (digit 1, or correct adjacent groupings of 2-4)
-Gray cells: Calculated areas (rows/cols 11+)
-Light gray cells: Needed parts area (row 10, col 10)
-Disabled cells: Darker gray background
-Smart Highlighting
-Adjacent grouping logic:
-Single "1" = green
-Two adjacent "2"s = both green
-Three adjacent "3"s = all green
-Four adjacent "4"s = all green
-Thick borders: Appear around entire rows/columns when only 1 part remains
-Game Logic
-Automatic Calculations
-Parts Left Calculation:
-Counts hinted ship parts (green cells)
-Counts entered numbers (player input)
-Subtracts both from needed parts
-Updates in real-time
-Vacant Space Calculation:
-Counts all occupied cells (any non-empty cell)
-Subtracts from 10 to show remaining spaces
-Helps players manage space constraints
-Input Validation
-Single character limit per textbox
-Automatic uppercase conversion
-Real-time grid state updates
-Special Behaviors
-Zero handling: Entering "0" in needed parts automatically marks entire row/column as sea (X)
-Mode switching: Seamless transition between setup and play modes
-State preservation: All entries maintained when switching modes
-User Interface
-Controls
-NEW/DONE button: Toggles between setup and play modes
-Mode indicator: Shows current mode and instructions
-Direct input: Click and type in any enabled textbox
-Responsive Design
-Fixed 40×40 pixel cells for consistent grid appearance
-Centered layout with clear visual boundaries
-A comprehensive instructions panel below the grid
-This creates a sophisticated puzzle game that combines logical deduction with spatial reasoning, where players must use numerical constraints and directional hints to locate hidden ships on the grid.
+## 🏗️ Grid Structure (13×13)
 
-NEW Mode (Setup):
+### Main Game Areas
 
-All textboxes enabled in rows 0-11 and columns 0-11
-You can edit the main 10×10 grid (hints)
-You can edit row 10 and column 10 (needed parts)
-You can now also edit row 11 and column 11 (custom setup values)
+| Area | Location | Description | Editable |
+|------|----------|-------------|----------|
+| **Heading** | Row 0, Col 0 | digits with row and col number | 📋 Display only |
+| **Game Area** | Row 1 col 1 to row 10 col 10 | 10×10 main puzzle area | ✅ Context-dependent |
+| **Needed Parts** | Row 11, Col 11 | Ship parts required per row/column for current game | ✅ Setup only |
+| **Parts Left** | Row 12, Col 12 | Auto-calculated remaining parts | ✅ Setup / 📊 Auto in Play |
+| **Vacant Spaces** | Row 13, Col 13 | Empty cells remaining (not ship parts and not | 📊 Auto-calculated |
+| **Labels** | Corners | "Need", "Left", "Vacant" headers | 📋 Display only |
 
-DONE Mode (Play):
+## 🔄 Game Modes
 
-Row 10, column 10, row 11, and column 11 all become disabled
-Row 11 and column 11 switch from showing your custom setup values to showing auto-calculated "parts left"
-Only the main 10×10 grid remains editable (and only cells without hints)
+### 🔧 NEW Mode (Setup Phase)
+Button: [NEW] → Click to enter setup
+Status: All textboxes ENABLED in 11×11 game area (row 1 col 1 to row 10 col 10) and in goal area (all of row 11, and all of col 11)
+Button [NEW] now reads DONE. 
 
-This gives you full control in setup mode to prepare both the puzzle constraints (needed parts) and any custom values for row/column 11, then switches to calculated mode during play where those become the automatic "parts left" counters.RetryClaude can make mistakes. Please double-check responses. Sonnet 4
+**Capabilities:**
+- ✏️ Set hints in Game Area (main 10×10 grid, starting at 1,1)
+- 🔢 Define row and column count of needed ship parts (row/col 11)
 
+**Calculations upon Setup completion**
+Button: [DONE] brings back the NEW text on the button.
+Any cells with hints are now uneditable. 
+Row and Col 11 with Needed Parsl
 
+- 🎛️ Set custom values in row/col 12
+- ⚙️ Prepare puzzle constraints
 
+**Special Behaviors:**
+- Entering `0` in needed parts → entire row/column marked as sea (`X`)
 
+### 🎯 DONE Mode (Play Phase)
+Button: [DONE] → Click to end setup mode and start playing
+Status: Selective textbox disabling
 
+**Enabled:**
+- 🎮 Empty cells in main 10×10 grid
+- 🔢 Cells with numbers (1-4)
 
+**Disabled:**
+- 🚫 Row 10 & Column 10 (needed parts)
+- 🚫 Row 11 & Column 11 (now shows auto-calculated "parts left")
+- 🚫 Cells with hints (U/D/L/R/M/S/X)
 
+## 🎨 Visual System
+
+### Color Coding
+| Element | Color | Meaning |
+|---------|-------|---------|
+| 🔵 **Blue cells** | `#87CEEB` | Sea markers (X, S) |
+| 🟢 **Green cells** | `#90EE90` | Valid ship parts |
+| ⬜ **Light gray** | `#f0f0f0` | Needed parts area |
+| ⬛ **Dark gray** | `#e0e0e0` | Calculated areas |
+| 🚫 **Disabled** | `#f5f5f5` | Non-editable cells |
+
+### Smart Highlighting
+- **Single parts**: `1` → Green
+- **Adjacent groups**: 
+  - Two adjacent `2`s → Both green
+  - Three adjacent `3`s → All green  
+  - Four adjacent `4`s → All green
+- **Thick borders**: Entire rows/columns with only 1 part remaining
+
+## 🧮 Game Logic
+
+### Auto-Calculations
+
+#### Parts Left Formula
+Parts Left = Needed Parts - Hinted Parts - Entered Parts
+- Updates in real-time as player makes moves
+- Excludes sea markers (X) from counts
+
+#### Vacant Spaces Formula
+Vacant Spaces = 10 - Total Occupied Cells
+- Counts ALL non-empty cells (hints + entries + sea)
+- Helps manage space constraints
+
+### Input Validation
+- ✅ Single character limit per cell
+- ✅ Automatic uppercase conversion
+- ✅ Real-time state updates
+- ✅ Mode-specific editing restrictions
+
+## 🎯 Supported Inputs
+
+### Hints (Setup Mode)
+| Input | Meaning | Visual |
+|-------|---------|--------|
+| `U` | Ship part points up | Text |
+| `D` | Ship part points down | Text |
+| `L` | Ship part points left | Text |
+| `R` | Ship part points right | Text |
+| `M` | Ship part is middle section | Text |
+| `S` / `X` | Sea (no ship) | Blue background |
+| `1` | Single ship part | Green background |
+
+### Numbers (Play Mode)
+| Input | Meaning | Behavior |
+|-------|---------|----------|
+| `1-4` | Ship part | Counts toward totals |
+| `X` | Sea marker | Blue, doesn't count as ship |
+
+## 🏆 Winning Condition
+
+Puzzle is solved when:
+- ✅ All ship parts placed according to hints
+- ✅ Row/column totals match requirements  
+- ✅ Adjacent number groups form valid ships
+- ✅ No conflicts with directional hints
+
+## 🔧 Technical Features
+
+- **React Hooks**: useState for state management
+- **Real-time Updates**: Immediate visual feedback
+- **Responsive Design**: Fixed 40×40px cells
+- **Memory Storage**: All data stored in component state
+- **Mode Persistence**: Settings maintained across mode switches
+
+## 🎮 How to Play
+
+1. **Setup**: Click `NEW` → Enter hints and constraints
+2. **Configure**: Set needed parts in row/col 10
+3. **Start**: Click `DONE` to begin solving
+4. **Solve**: Fill main grid following constraints
+5. **Visual Cues**: Use colors and borders for guidance
+6. **Complete**: Satisfy all numerical requirements
+
+---
+
+*A challenging logic puzzle that tests spatial reasoning and deductive skills!*RetryClaude does not have the ability to run the code it generates yet.Claude can make mistakes. Please double-check responses. Sonnet 4
